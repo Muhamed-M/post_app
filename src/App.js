@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { FaSearch } from 'react-icons/fa'
 import './App.css';
 import Post from './components/Post';
 
@@ -30,11 +31,30 @@ function App() {
     return data;
   };
 
+  const handleSearch = e => {
+    posts.forEach((post, i) => {
+      if (!post.title.includes(e.target.value)) {
+        document.querySelectorAll('.post')[i].classList.add('hide')
+      } else document.querySelectorAll('.post')[i].classList.remove('hide')
+    })
+  }
+
   return (
     <div className="App">
+      <div className='container'>
+        <input 
+          type='text' 
+          placeholder='Search' 
+          className='search-bar' 
+          onChange={handleSearch}
+        />
+        <FaSearch className='fa-search'/>
+      </div>
+      <div className='posts'>
       {
         posts.map(post => <Post key={post.id} post={post} users={users} />)
       }
+      </div>
     </div>
   );
 }
